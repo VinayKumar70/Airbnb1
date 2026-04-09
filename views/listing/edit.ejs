@@ -1,0 +1,66 @@
+<% layout("/layouts/boilerplate") %>
+    <h1 class="offset-5 mt-3"><b>Edit your Rent</b></h1>
+    <br><br>
+    <form action="/listing/<%= listing._id %>?_method=PUT" method="post" novalidate class="row g-3 needs-validation"
+        enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="mb-3">
+                    <label for="listing[title]" class="form-label">Title</label>
+                    <input class="form-control" required type="text" value="<%= listing.title %>" id="listing[title]"
+                        name="listing[title]">
+                    <div class="valid-feedback">Title is good!</div>
+                    <div class="invalid-feedback">Please Enter a Good Title for your Hotel</div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" required name="listing[description]" id="description" rows="5"
+                        cols="10"><%= listing.description %></textarea>
+                    <div class="valid-feedback">Description is Awesome! </div>
+                    <div class="invalid-feedback">Please Enter a Good Description for your Hotel</div>
+                </div>
+                <div class="mb-3">
+                    <label for="Price" class="form-label">Price</label>
+                    <input required class="form-control" type="text" value="<%= listing.price %>" id="Price"
+                        name="listing[price]">
+                    <div class="valid-feedback">Your Price is resasonal</div>
+                    <div class="invalid-feedback">Please Enter a valid Price for your Hotel</div>
+                </div>
+                  <div class="mb-3">
+                    Original Image
+                    <br>
+                    <img src="<%= originalimage %>" alt="">
+                </div>
+                <div class="mb-3">
+                    <label for="listing[image]" class="form-label">Upload new Image</label>
+                    <input class="form-control" type="file" name="listing[image]">
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="mb-3">
+                            <label class="form-label" for="location">Location</label>
+                            <input required class="form-control" type="text" value="<%= listing.location %>"
+                                id="location" name="listing[location]">
+                            <div class="valid-feedback">Location is perfect</div>
+                            <div class="invalid-feedback">Please Give a Proper Location for your Hotel</div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="mb-3">
+                            <label class="form-label" for="Country">Country </label>
+                            <input required class="form-control" type="text" value="<%= listing.country %>" id="Country"
+                                name="listing[country]">
+                            <div class="valid-feedback">Country is perfect for vacation!</div>
+                            <div class="invalid-feedback">Please give a Good Country name of your Hotel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-dark rent-btn">
+                    Rent Your House
+                </button>
+                <br><br>
+            </div>
+        </div>
+        <br><br>
+    </form>

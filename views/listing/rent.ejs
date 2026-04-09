@@ -1,0 +1,69 @@
+<% layout("/layouts/boilerplate") %>
+    <h1 class="offset-5 mt-3"><b>Rent your House!</b></h1>
+    <br><br>
+    <form action="/listing" method="post" novalidate class="row g-3 needs-validation" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <div class="mb-3">
+                    <label for="listing[title]" class="form-label">Title</label>
+                    <input type="text" placeholder="Give a title for Your Hotel" id="title" name="listing[title]"
+                        class="form-control" required>
+                    <div class="valid-feedback">Title is good!</div>
+                    <div class="invalid-feedback">Please Enter a Good Title for your Hotel</div>
+                </div>
+                <div>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" id="description" rows="5" class="form-control" cols="10"
+                        placeholder="Tell us more about your house" required></textarea>
+                    <div class="valid-feedback">Description is Awesome! </div>
+                    <div class="invalid-feedback">Please Enter a Good Description for your Hotel</div>
+                </div>
+                <div class="mb-3">
+                    <label for="Price" class="form-label">Price</label>
+                    <input class="form-control" type="text" required placeholder="Enter the rent You want to list"
+                        id="Price" name="listing[price]">
+                    <div class="valid-feedback">Your Price is resasonal</div>
+                    <div class="invalid-feedback">Please Enter a valid Price for your Hotel</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="image-URL" class="form-label">image URL</label>
+                    <input class="form-control" type="text" placeholder="Enter the Url of the Image"
+                        name="listing[image][URL]">
+                </div> -->
+                <div class="mb-3">
+                    <label for="image-URL" class="form-label">Upload image </label>
+                    <input class="form-control" type="file" name="listing[image]" required>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="image-filename" class="form-label">Image Filename</label>
+                    <input class="form-control" type="text" placeholder="Enter the filename of the Image"
+                        name="listing[image][filename]">
+                </div> -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input class="form-control" required type="text"
+                                placeholder="Enter the location of your house" id="location" name="listing[location]">
+                            <div class="valid-feedback">Location is perfect</div>
+                            <div class="invalid-feedback">Please Give a Proper Location for your Hotel</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="Country" class="form-label">Country </label>
+                            <input class="form-control" required type="text"
+                                placeholder="Name the Country of your location" id="Country" name="listing[country]">
+                            <div class="valid-feedback">Country is perfect for vacation!</div>
+                            <div class="invalid-feedback">Please give a Good Country name of your Hotel</div>
+                        </div class="mb-3">
+                    </div>
+                </div>
+                <br><br>
+                <button class="btn btn-dark rent-btn">
+                    Rent Your House
+                </button>
+                <br><br><br><br>
+            </div>
+
+    </form>
