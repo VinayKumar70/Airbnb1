@@ -32,7 +32,7 @@ module.exports.createListing = async (req, res, next) => {
     req.flash("success", "New Listing Created!");
     res.redirect("/listing");
 };
-module.exports.renderShow = async (req, res) => {
+module.exports.renderShow = async (req, res) => { 
     let { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new ExpressError(400, "Invalid ID");

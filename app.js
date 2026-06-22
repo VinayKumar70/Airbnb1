@@ -18,26 +18,26 @@ const passport = require("passport");
 const User = require("./models/user.js");
 const multer  = require('multer')
 const dburl = process.env.ATLAS_URL;
-// main()                                                          //shows Exception
-//     .then((res) => {
-//         console.log("connectioin Successful");
-//     })
-//     .catch((err) => console.log(err));
-async function startServer() {
-    try {
-        await mongoose.connect(dburl);
-        console.log("✅ DB Connected");
+main()                                                          //shows Exception
+    .then((res) => {
+        console.log("connectioin Successful");
+    })
+    .catch((err) => console.log(err));
+// async function startServer() {
+//     try {
+//         await mongoose.connect(dburl);
+//         console.log("✅ DB Connected");
 
-        app.listen(8080, () => {
-            console.log("🚀 Server running on port 8080");
-        });
+//         app.listen(8080, () => {
+//             console.log("🚀 Server running on port 8080");
+//         });
 
-    } catch (err) {
-        console.log("❌ DB Error:", err);
-    }
-}
+//     } catch (err) {
+//         console.log("❌ DB Error:", err);
+//     }
+// }
 
-startServer();
+// startServer();
 
 async function main() {
     await mongoose.connect(dburl);         //connect mongo to localhost with the help of asynchronous function
@@ -55,20 +55,20 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
 const store = MongoStore.create({
-    crypto:{secret: "mysuperserectcode"},
+    crypto:{secret: process.env.SECRET},
     mongoUrl: dburl,
     touchAfter: 24*3600
      
 });
-store.on("error", () =>{
-    console.log("ERROR ON MONGO SESSION STORE");
+store.on("error", (error) =>{
+    console.log("ERROR ON MONGO SESSION STORE", error);
 });
 
 const sessionOptions = {
     store: store,
-    secret: "mysuperserectcode",
+    secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -86,12 +86,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user || null;
-    next();
-});
 
 // app.get("/", (req, res) => {
 //     res.send("Hi, I am root");
