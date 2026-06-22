@@ -87,6 +87,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user || null;
+    next();
+});
+
 // app.get("/", (req, res) => {
 //     res.send("Hi, I am root");
 // });
@@ -149,7 +156,8 @@ app.use((err, req, res, next) => {
     // res.send("something went wrong");
 });
 
+const PORT = process.env.PORT || 8080;
 
-app.listen(8080, () => {
-    console.log("server is listing on port 8080");
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
