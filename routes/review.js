@@ -8,9 +8,6 @@ const Listing = require("../models/listing.js");
 const mongoose = require("mongoose");
 
 
-
-
-
 router.post("/",isLoggedIn, validateReview, wrapAsync(reviewController.addReview));
 
 //delte Review route
