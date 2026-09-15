@@ -1,8 +1,8 @@
 <% layout("/layouts/boilerplate") %>
     <script>
-    const mapToken = "<%= mapToken %>";
-    const listing = JSON.parse('<%- JSON.stringify(listing) %>');
-</script>
+        const mapToken = "<%= mapToken %>";
+        const listing = JSON.parse('<%- JSON.stringify(listing) %>');
+    </script>
     <div class="row">
         <div class="col-8 offset-3 mt-3">
             <h3 class="mb-0">
@@ -82,31 +82,31 @@
                                         <div class="card col-5 ms-3 mb-3">
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    <%= review.author.username %>
+                                                    <b>
+                                                        <%= review.author.username %>
+                                                    </b>
                                                 </div>
-                                                <!-- <div class="card-subtitle mb-2 text-body-secondary">
-                                <%= review.createdAt %>
-                            </div> -->
+
                                                 <p class="starability-result card-text"
-                                                    data-rating="<%= review.rating %>">
-                                                </p>
+                                                    data-rating="<%= review.rating %>"></p>
+
                                                 <p class="card-text">
                                                     <%= review.comment %>
                                                 </p>
-                                                <br>
-                                                <!-- <p class="card-text">
-                                                <%= review.rating %> star
-                                            </p> -->
-                                                <form class="mb-3"
-                                                    action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                                                    method="post">
-                                                    <button class="btn btn-sm btn-dark">Delete</button>
-                                                </form>
+
+                                                <% if (currUser && review.author._id.equals(currUser._id)) { %>
+                                                    <form class="mb-3"
+                                                        action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                        method="post">
+                                                        <button class="btn btn-sm btn-dark">Delete</button>
+                                                    </form>
+                                                    <% } %>
                                             </div>
                                         </div>
                                         <% } %>
                                 </div>
                                 <% } %>
+
                                     <div class="col-6 mt-3 mb-3 ">
                                         <h3>where you will be</h3>
                                         <div id="map">
