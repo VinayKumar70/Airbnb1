@@ -11,7 +11,7 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js")
 const session = require("express-session");
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const LocalStrategy = require("passport-local");
 const passport = require("passport");
@@ -75,6 +75,8 @@ const sessionOptions = {
         httpOnly: true,
     }
 };
+
+app.set("trust proxy", 1);
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -151,10 +153,11 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+    console.error("SERVER ERROR:", err); // Render logs me exact line print karega
     let { statusCode = 500, message = "Something went wrong!" } = err;
     res.status(statusCode).render("./listing/error.ejs", { message });
-    // res.send("something went wrong");
 });
+
 
 const PORT = process.env.PORT || 8080;
 

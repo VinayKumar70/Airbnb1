@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
     <script>
     const mapToken = "<%= mapToken %>";
-    const listing = <%- JSON.stringify(listing) %>;
+    const listing = JSON.parse('<%- JSON.stringify(listing) %>');
 </script>
     <div class="row">
         <div class="col-8 offset-3 mt-3">
