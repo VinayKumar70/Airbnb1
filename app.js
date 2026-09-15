@@ -102,12 +102,11 @@ app.use((req, res, next) => {
 
 // Global Error Handler Middleware
 app.use((err, req, res, next) => {
+    console.error(">>> RENDER CRASH TRACE <<<", err.stack || err);
     let { statusCode = 500, message = "Something went wrong!" } = err;
-    if (statusCode === 500) {
-        console.error("ACTUAL 500 BACKEND CRASH:", err);
-    }
     res.status(statusCode).render("./listing/error.ejs", { message });
 });
+
 
 
 const PORT = process.env.PORT || 8080;

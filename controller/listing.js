@@ -1,6 +1,6 @@
 const Listing = require("../models/listing.js");
 const mongoose = require("mongoose");
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding-v6.js');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding'); // ✅ Correct
 const { response } = require("express");
 const mapToken =  process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
@@ -14,24 +14,44 @@ module.exports.renderRent = async (req, res) => {
     res.render("listing/rent.ejs")
 };
 module.exports.createListing = async (req, res, next) => {
-    // let { title, description, price, location, country } = req.body;
+    console.log(">>> 1. ROUTE REACHED <<<");
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+    console.log("USER:", req.user);
+
+    // 1. Geocoding request
     let coordinate = await geocodingClient.forwardGeocode({
-  query: req.body.listing.location,
-  limit: 1
-})
-  .send()
+        query: req.body.listing.location,
+        limit: 1
+    }).send();
+
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+
+    // 2. Safe image assignment
+    if (req.file) {
         let url = req.file.path;
         let filename = req.file.filename;
         newListing.image = { filename, url };
+    }
 
-    newListing.geometry = coordinate.body.features[0].geometry;
+    // 3. Safe geometry assignment (Prevents crash if location not found)
+    if (coordinate.body.features && coordinate.body.features.length > 0) {
+        newListing.geometry = coordinate.body.features[0].geometry;
+    } else {
+        newListing.geometry = {
+            type: "Point",
+            coordinates: [77.2090, 28.6139] // Default fallback (e.g. New Delhi)
+        };
+    }
 
     let saveListing = await newListing.save();
+    console.log("Listing saved successfully:", saveListing._id);
+
     req.flash("success", "New Listing Created!");
     res.redirect("/listing");
 };
+
 module.exports.renderShow = async (req, res) => { 
     let { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
