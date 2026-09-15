@@ -8,10 +8,17 @@ const multer = require("multer");
 const upload = multer({storage});
 
 router.route("/")
-.get(wrapAsync(listingController.index))
-.post(isLoggedIn, upload.single("listing[image]"), validateListing, wrapAsync(listingController.createListing));
-//CREATE_ROUTE
-router.get("/rent", isLoggedIn, listingController.renderRent);
+  .get(wrapAsync(listingController.index))
+  .post(
+    isLoggedIn,
+    (req, res, next) => { console.log("STEP 1: isLoggedIn Passed"); next(); },
+    upload.single("listing[image]"),
+    (req, res, next) => { console.log("STEP 2: Multer/Cloudinary Upload Passed"); next(); },
+    validateListing,
+    (req, res, next) => { console.log("STEP 3: ValidateListing Passed"); next(); },
+    wrapAsync(listingController.createListing)
+  );
+
 
 
 router.route("/:id")
