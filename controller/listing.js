@@ -1,6 +1,7 @@
 const Listing = require("../models/listing.js");
 const mongoose = require("mongoose");
-const ExpressError = require("./utils/ExpressError.js");
+const ExpressError = require("../utils/ExpressError.js");
+
 
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding'); // ✅ Correct
 const { response } = require("express");
